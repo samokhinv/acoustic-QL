@@ -1,0 +1,217 @@
+\documentclass[a4paper,14pt]{article}
+
+
+%%% Работа с русским языком
+\usepackage[T2A]{fontenc}			% кодировка
+\usepackage[utf8]{inputenc}	
+\usepackage[english,russian]{babel}   %% загружает пакет многоязыковой вёрстки
+\usepackage{indentfirst}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+\usepackage{dsfont}
+\renewcommand{\P}{\ensuremath{\mathds{P}}}
+\renewcommand{\epsilon}{\ensuremath{\varepsilon}}
+\renewcommand{\phi}{\ensuremath{\varphi}}
+\renewcommand{\kappa}{\ensuremath{\varkappa}}
+\renewcommand{\le}{\ensuremath{\leqslant}}
+\renewcommand{\leq}{\ensuremath{\leqslant}}
+\renewcommand{\ge}{\ensuremath{\geqslant}}
+\renewcommand{\geq}{\ensuremath{\geqslant}}
+\renewcommand{\emptyset}{\varnothing}
+\newcommand{\ra}{\rightarrow}
+\newcommand{\ol}[1]{\overline{#1}}
+%%% Дополнительная работа с математикой
+\usepackage{amsmath,amsfonts,amssymb,amsthm,mathtools} % AMS
+\usepackage{icomma} % "Умная" запятая: $0,2$ --- число, $0, 2$ --- перечисление
+
+%% Номера формул
+%\mathtoolsset{showonlyrefs=true} % Показывать номера только у тех формул, на которые есть \eqref{} в тексте.
+%\usepackage{leqno} % Нумерация формул слева
+
+%% Свои команды
+\DeclareMathOperator{\sgn}{\mathop{sgn}}
+
+%% Перенос знаков в формулах (по Львовскому)
+\newcommand*{\hm}[1]{#1\nobreak\discretionary{}
+{\hbox{$\mathsurround=0pt #1$}}{}}
+
+%%% Работа с картинками
+\usepackage{tikz}
+\usetikzlibrary{automata, positioning}
+\usepackage{graphicx}  % Для вставки рисунков
+\setlength\fboxsep{3pt} % Отступ рамки \fbox{} от рисунка
+\setlength\fboxrule{1pt} % Толщина линий рамки \fbox{}
+\usepackage{wrapfig} % Обтекание рисунков текстом
+
+
+
+%%% Работа с таблицами
+\usepackage{array,tabularx,tabulary,booktabs} % Дополнительная работа с таблицами
+\usepackage{longtable}  % Длинные таблицы
+\usepackage{multirow} % Слияние строк в таблице
+
+%%% Теоремы
+\theoremstyle{plain} % Это стиль по умолчанию, его можно не переопределять.
+\newtheorem{theorem}{Теорема}[section]
+\newtheorem{proposition}[theorem]{Утверждение}
+\newtheorem{problem}{Задача}[section]
+
+ 
+\theoremstyle{definition} % "Определение"
+\newtheorem{lemma}{Лемма}[section]
+\newtheorem{conclusion}{Следствие}[theorem]
+ 
+\theoremstyle{remark} % "Примечание"
+\newtheorem*{defin}{Определение}
+\newtheorem*{answer}{Ответ}
+\newtheorem*{solution}{Решение}
+\newcommand{\E}{\ensuremath{\mathds{E}}}
+\newcommand{\V}{\ensuremath{\mathds{V}}}
+%%% Программирование
+\usepackage{etoolbox} % логические операторы
+
+%%% Страница
+\usepackage{extsizes} % Возможность сделать 14-й шрифт
+\usepackage{geometry} % Простой способ задавать поля
+   \geometry{top=30mm}
+   \geometry{bottom=40mm}
+   \geometry{left=20mm}
+   \geometry{right=20mm}
+ %
+%\usepackage{fancyhdr} % Колонтитулы
+% 	\pagestyle{fancy}
+ 	%\renewcommand{\headrulewidth}{0pt}  % Толщина линейки, отчеркивающей верхний колонтитул
+% 	\lfoot{Нижний левый}
+% 	\rfoot{Нижний правый}
+% 	\rhead{Верхний правый}
+% 	\chead{Верхний в центре}
+% 	\lhead{Верхний левый}
+%	\cfoot{Нижний в центре} % По умолчанию здесь номер страницы
+
+\usepackage{setspace} % Интерлиньяж
+\onehalfspacing % Интерлиньяж 1.5
+%\doublespacing % Интерлиньяж 2
+\usepackage{caption}
+\usepackage{lastpage} % Узнать, сколько всего страниц в документе.
+
+\usepackage{soul} % Модификаторы начертания
+
+\usepackage{hyperref}
+
+\hypersetup{				% Гиперссылки
+    unicode=true,           % русские буквы в раздела PDF
+    pdftitle={Опты №2},   % Заголовок
+    pdfauthor={Самохин 676},      % Автор
+    colorlinks=true,       	% false: ссылки в рамках; true: цветные ссылки
+    linkcolor=black,          % внутренние ссылки
+    citecolor=black,        % на библиографию
+    filecolor=magenta,      % на файлы
+    urlcolor=blue           % на URL
+}
+
+\usepackage{csquotes} % Еще инструменты для ссылок
+\usepackage{listings}
+\usepackage{footnote}
+\makesavenoteenv{tabular}
+
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+\usepackage{multicol}
+\renewcommand{\r}{\ensuremath{\overline{r}}}
+
+\begin{document}
+	\section{Прямая задача}
+	Разделение акустического волнового поля на первичную и отраженную (фоновую и аномальную части)
+	
+	$P(\r, t)$ - давление в точке $\overline{r}$ в момент $t$\\
+	Применяем преобразование Фурье:
+	$$P(\r, t) = \dfrac{1}{2\pi}\int_{-\infty}^{+\infty}p(\r, \omega)e^{-i\omega t}d\omega$$
+	$$p(\r, \omega) = \int_{-\infty}^{+\infty}P(\r, t)e^{i\omega t}dt$$
+	
+	Акустическое уравнение:
+	$$\nabla^2p(\r, \omega) + \dfrac{\omega^2}{c^2(\r)}p(\r, \omega) = -f^e(\r, \omega),$$
+	где 
+	$$f^e = \int_{-\infty}^{+\infty}F^e(\r, t)e^{i\omega t}dt$$
+	
+	Введем граничные условия:
+	$rp(\r, \omega)$ - ограничено и $$\displaystyle{\lim_{r\to\infty} r\left[\dfrac{\partial}{\partial r}p(\r, \omega) - i \dfrac{\omega}{c}p(\r, \omega)\right]} = 0$$
+	
+	Введем представление скорости в модели:
+	$$\dfrac{1}{c^2(\r)} = \dfrac{1}{c^2_b}(1+a(\r)),$$
+	где величина $a(\r)$ задана внутри аномальной области, где скорость отлична от фоновой.
+	
+	Считаем, что вызванная этим неоднородность локальна, то есть:
+	$$\exists R: \forall \r:\ \|\r\| > R\; \rightarrow \c(\r) = c_b(\r)$$
+	
+	Для удобства введем понятие \underline{медленности}:
+	$$s(\r) = \dfrac{1}{c(\r)},\; s_b(\r) = \dfrac{1}{c_b(\r)},$$	
+	тогда 
+	$$a(\r) = \dfrac{s^2(\r) - s^2_b(\r)}{S^2_b(\r)} = \dfrac{\Delta S^2(\r)}{S^2_b(\r)}$$
+	
+	\subsection{Разделение:}
+	$$p(\r, \omega) = p^i(\r, \omega) + p^s(\r, \omega),$$
+	где $p^i$ - первичное (initial) поле, $p^s$ - отраженное (secondary) поле.
+	
+	Уравнения после разделения примут вид:
+	\begin{equation*}
+		\begin{rcases}
+		\nabla^2p^i(\r, \omega) + \dfrac{\omega^2}{c_b^2(\r)}p^i(\r, \omega) = - f^e(\r, \omega),\\
+		\nabla^2p^s(\r, \omega) + \dfrac{\omega^2}{c_b^2(\r)}p^is\r, \omega) = - \omega^2\nabla s^2(\r)p(\r, \omega)
+		\end{rcases}
+		\text{удовл. гр.усл.}
+	\end{equation*}
+	$f^a(\r, \omega) = \omega^2\nabla s^2p(\r, \omega) $ - интенсивность аномального источника\\
+	$\nabla^2p^s(\r, \omega) + \dfrac{\omega^2}{c^2_b(\r)}p^2(\r, \omega) = -f^a(\r, \omega)$
+	
+	Интегральное уравнение:
+	$$p^i(\r_j, \omega) = \int\int_{V^\infty}\int f^e(\r, \omega)G^\omega(\r_j \mid \r, \omega)dv = G_\omega(f^e)$$
+	Здесь под $\r_j$ понимается некоторая постоянная точка, в то время как по $\r$ ведется интегрирование.
+	
+	$G_\omega(f^e)$ - скалярный волновой оператор Грина,ёё
+	$G^\omega(\r_j \mid \r,\omega)$ - функция Грина - хорошее решение уравнения для сигнала -- дельта-функции, \\
+	$$\nabla^2 G^\omega(\r_j \mid \r, \omega) + \dfrac{\omega^2}{c^2_b(\r)}G^\omega(\r_j \mid \r, \omega) = - \delta(\r_j, -\r)$$
+	Для отр. поля:
+	$$p^s(\r, \omega) = \int\int_\mathcal{D}\int G^\omega(\r_j \mid \r, \omega) f^a(\r, \omega)d\r = G_\omega(f^a),$$
+	то есть $p^s = \omega^2 G_\omega(\nabla s^2p)$.
+	
+	\subsection{Общее уравнение:}
+	 $$p(\r_j, \omega) = \omega^2 G_\omega\left(\nabla s^2(\r)\ p(\r, \omega)\right) + p^i(\r, \omega),$$
+	 где первое слагаемое соответствует отраженным волнам, а второе - первичным.
+	 
+	 $\r_j \in \mathcal{D} \Rightarrow$  инт. ур-е относительно волнового поля $p(\r,\omega)$
+	 
+	 \begin{theorem}[взаимности]
+	 	Можно поменять роли точек "источник-приемник"
+	 	\ местами, и результат не изменится:
+	 	$$G^\omega(\r^{''} \mid \r^{'}, \omega) = G^\omega(\r^{'} \mid \r^{''}, \omega)$$
+	 \end{theorem}
+ 
+ 	\subsection{Приближение Борна}
+ 	\begin{multline*}p^s(\r_j, \omega) = \omega^2G_\omega\left(\triangle s^2(\r)p(\r, \omega)\right) = \\ \omega^2 \int\int_\mathcal{D}\int G^\omega(\r_j \mid \r, \omega)\triangle s^2(\r)\left[p^i(\r,\omega) + p^s(\r,\omega)\right]dr
+ 	\end{multline*}
+ 	$p^B(\r,\omega)$ - приближение Борна: отбрасываем отраженное поле внутри области:
+ 	$$p^B(\r_j, \omega) = \omega^2 \int\int_\mathcal{D}\int G^\omega\left(\r_j \mid \r, \omega\right)\nabla s^2(\r)p^i(\r, \omega)dr$$
+ 	Теперь эта задача решается: $p^i$ можно вычислить, следовательно, можно посчитать и $p^B$.
+ 	
+ 	\subsection{Квазилинейное приближение}
+ 	$$p(\r, \omega) = p^i(\r, \omega) + p^s(\r, \omega)=\left[1 + \lambda(\r, \omega)\right]p^i(\r, \omega),\ \ \lambda(\r, \omega) = \dfrac{p^s(\r, \omega)}{p^i(\r, \omega)}$$
+ 	$$p^s(\r_j, \omega) = \omega^2G_\omega\left(\triangle s^2(\r)\left[1+\lambda(\r, \omega)\right]p^i(\r, \omega)\right)$$
+ 	Заметим, что при $\lambda  = 0$ получаем приближение Борна.
+ 	
+ 	При таком подходе основной проблемой становится нахождение $\lambda$, которая решается численным решением задачи минимизации
+ 	$$\|\lambda(\r_j, \omega)p^i(\r_j, \omega) - \omega^2G_\omega\left(\triangle s^2(\r)\left[1+ \lambda(\r, \omega)\right]p^i(\r, \omega)\right)\|_{\Omega, \mathcal{D}},$$
+ 	где под $\|\cdot\|_{\Omega, \mathcal{D}}$ подразумевается норма в $L_2$, т.е. 
+ 	$$\|p\|_{\Omega, \mathcal{D}} = \sqrt{\int_{\Omega}\ \int\int_\mathcal{D}\int (p(\r, u))^2drdu}$$
+ 	
+ 	\subsection{Квазианалитическое приближение}
+ 	Раскладываем $\lambda$ по Тейлору:
+ 	$$\lambda(\r, \omega) = \lambda(\r_j, \omega) + (\r - \r_j)\nabla\lambda(\r_j, \omega) + O(|\r - \r_j|^2)$$
+ 	Тогда
+ 	$$\lambda(\r, \omega)p^i(\r_j, \omega) \approx \omega^2 \lambda(\r_j,\omega)G_\omega\left[\triangle s^2p^i\right] + p^B = \lambda(\r_j, \omega)p^B(\r_j, \omega) + p^\beta(\r_j, \omega)$$
+ 	
+ 	$$\lambda(\r_j, \omega) = \dfrac{p^B(\r_j, \omega)}{p^i(\r_j, \omega) - p^\beta(\r_j, \omega)}, \ \ \r_j \in \mathcal{D}$$
+ 	
+ 	Таким образом,
+ 	$$p^s_{QA} = \omega^2 G_\omega\left[\triangle s^2(\r)\dfrac{p^i(\r, \omega)}{1-g(\r, \omega)}\right], \ \ g(\r, \omega) = \dfrac{p^B(\r, \omega)}{p^i(\r, \omega)}$$
+ 	
+\end{document}
